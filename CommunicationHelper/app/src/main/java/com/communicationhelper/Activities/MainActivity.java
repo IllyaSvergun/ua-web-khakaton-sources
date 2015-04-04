@@ -12,11 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.os.Build;
 import android.widget.ImageButton;
 
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
-import com.communicationhelper.Helpers.PreferencesHelper;
 import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
 import ru.yandex.speechkit.*;
@@ -160,6 +160,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     @Override
     public void onError(Recognizer recognizer, ru.yandex.speechkit.Error error) {
         Log.v(TAG, "onError");
+
     }
 
 
@@ -170,12 +171,15 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
 
     public void executeMicro(View view) {
         if (mRecognizerStarted) {
-            recognizer.finishRecording();
+            if(recognizer!=null){
+                recognizer.finishRecording();}
         } else {
+            if(recognizer==null){
             mRecognizerStarted = true;
             recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
             recognizer.setVADEnabled(false);
             recognizer.start();
+            }
         }
 
     }

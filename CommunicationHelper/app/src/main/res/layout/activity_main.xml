@@ -21,30 +21,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/buttons_block"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/btn_micro"
-            android:src="@drawable/ic_micro"
-            android:onClick="executeMicro"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
+            android:background="@drawable/selector_btn_micro"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10px"
+            android:layout_marginBottom="10px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <ImageButton
             android:id="@+id/text_button"
             android:onClick="executeTypeText"
-            android:src="@drawable/ic_text"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
+            android:background="@drawable/selector_btn_edit"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
 

@@ -1,10 +1,12 @@
-package com.communicationhelper;
+package com.communicationhelper.Activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.communicationhelper.R;
 
 
 public class BigTextActivity extends ActionBarActivity {

@@ -27,6 +27,7 @@
         android:layout_height="wrap_content">
 
         <ImageButton
+            android:id="@+id/btn_micro"
             android:src="@drawable/ic_micro"
             android:layout_weight="1"
             android:layout_width="fill_parent"

@@ -1,4 +1,4 @@
-package com.communicationhelper;
+package com.communicationhelper.Entities;
 
 /**
  * Created by Illya Svergun on 04.04.15.

@@ -49,9 +49,6 @@ public class ConversationFragment extends Fragment {
             e.printStackTrace();
         }
 
-        adapter.addItem(new Line("request", LineTypes.REQUEST));
-        adapter.addItem(new Line("response", LineTypes.RESPONSE));
-
         return rootView;
     }
 

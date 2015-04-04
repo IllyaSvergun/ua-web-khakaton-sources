@@ -59,10 +59,10 @@ public class ConversationListAdapter extends BaseAdapter{
             holder = new ViewHolder();
             switch (type) {
                 case LineTypes.REQUEST:
-                    convertView = mInflater.inflate(R.layout.list_item_request, null);
+                    convertView = mInflater.inflate(R.layout.list_item_request, parent, false);
                     break;
                 case LineTypes.RESPONSE:
-                    convertView = mInflater.inflate(R.layout.list_item_response, null);
+                    convertView = mInflater.inflate(R.layout.list_item_response, parent, false);
                     break;
             }
             if (convertView != null) {

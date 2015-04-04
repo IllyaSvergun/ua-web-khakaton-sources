@@ -30,6 +30,7 @@
         <ImageButton
             android:id="@+id/btn_micro"
             android:background="@drawable/selector_btn_micro"
+            android:onClick="executeMicro"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="10dp"

@@ -1,12 +1,14 @@
 package com.communicationhelper.Conversation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.communicationhelper.Activities.BigTextActivity;
 import com.communicationhelper.Entities.Line;
 import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
@@ -18,11 +20,13 @@ import java.util.List;
  * Created by ilia on 04.04.15.
  *
  */
-public class ConversationListAdapter extends BaseAdapter{
+public class ConversationListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Line> data;
+    Context mContext;
 
-    public ConversationListAdapter(Context context){
+    public ConversationListAdapter(Context context) {
+        mContext = context;
         mInflater = LayoutInflater.from(context);
         data = new ArrayList<>();
     }
@@ -56,7 +60,7 @@ public class ConversationListAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         String type = getItemType(position);
         if (convertView == null) {
@@ -79,6 +83,15 @@ public class ConversationListAdapter extends BaseAdapter{
             holder.textView = (TextView)convertView.findViewById(R.id.text);
         }
         holder.textView.setText(data.get(position).getText());
+        assert convertView != null;
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bigTextIntent = new Intent(mContext, BigTextActivity.class);
+                bigTextIntent.putExtra(BigTextActivity.EXTRA_BIG_TEXT, getItem(position).getText());
+                mContext.startActivity(bigTextIntent);
+            }
+        });
         return convertView;
     }
 

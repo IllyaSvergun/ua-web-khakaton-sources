@@ -12,17 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.os.Build;
 import android.widget.ImageButton;
 
+import com.communicationhelper.Entities.Line;
+import com.communicationhelper.Helpers.PreferencesHelper;
+import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
 import ru.yandex.speechkit.*;
 
 import com.communicationhelper.Conversation.ConversationFragment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 
 
-public class MainActivity extends ActionBarActivity implements RecognizerListener, View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements RecognizerListener {
     AutoCompleteTextView mAutocomplete;
     private static final String TAG = "SpeechKitSample";
     private static final String TAGRESULT = "RESULT";
@@ -39,8 +43,6 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         btn_micro = (ImageButton) findViewById(R.id.btn_micro);
         btn_edit = (ImageButton) findViewById(R.id.text_button);
         recognizer = null;
-        btn_micro.setOnClickListener(this);
-        btn_edit.setOnClickListener(this);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new ConversationFragment())
@@ -57,9 +59,16 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
                     {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            Intent bigTextIntent = new Intent(getApplicationContext(), BigTextActivity.class);
-                            bigTextIntent.putExtra(BigTextActivity.EXTRA_BIG_TEXT, mAutocomplete.getText().toString());
-                            startActivity(bigTextIntent);
+                            String text = mAutocomplete.getText().toString();
+                            Line response = new Line(text, LineTypes.RESPONSE);
+                            try {
+                                JSONArray jsonArr = new JSONArray(PreferencesHelper.getConversation(getApplicationContext()));
+                                jsonArr.put(response.toJSONObject());
+                                PreferencesHelper.saveConversation(getApplicationContext(), jsonArr);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            executeBigTextScreen(text);
                             return true;
                         default:
                             break;
@@ -70,6 +79,11 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         });
     }
 
+    protected void executeBigTextScreen(String text) {
+        Intent bigTextIntent = new Intent(getApplicationContext(), BigTextActivity.class);
+        bigTextIntent.putExtra(BigTextActivity.EXTRA_BIG_TEXT, text);
+        startActivity(bigTextIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,24 +170,16 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.btn_micro:
-                recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
-                recognizer.setVADEnabled(false);
-                recognizer.start();
-                break;
-            case R.id.text_button:
-                recognizer.finishRecording();
-                break;
-        }
-    }
 
     public void executeTypeText(View view) {
         mAutocomplete.setVisibility(View.VISIBLE);
         mAutocomplete.requestFocus();
+    }
+
+    public void executeMicro(View view) {
+        recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
+        recognizer.setVADEnabled(false);
+        recognizer.start();
     }
 
     /**

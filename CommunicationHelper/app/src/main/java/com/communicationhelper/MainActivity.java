@@ -15,6 +15,8 @@ import android.os.Build;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.communicationhelper.Conversation.ConversationFragment;
+
 
 public class MainActivity extends ActionBarActivity {
     AutoCompleteTextView mAutocomplete;
@@ -25,8 +27,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new ConversationFragment())
                     .commit();
         }
         mAutocomplete = (AutoCompleteTextView) findViewById(R.id.autocomplete);

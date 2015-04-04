@@ -33,6 +33,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10px"
             android:layout_marginBottom="10px"
+            android:onClick="executeMicro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

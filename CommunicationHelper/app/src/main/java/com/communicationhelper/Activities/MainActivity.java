@@ -1,5 +1,6 @@
 package com.communicationhelper.Activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,8 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     AutoCompleteTextView mAutocomplete;
     private static final String TAG = "SpeechKitSample";
     private static final String TAGRESULT = "RESULT";
+    private ImageButton btn_micro;
+    private ImageButton btn_edit;
     private Recognizer recognizer;
     private boolean mRecognizerStarted = false;
 
@@ -39,6 +42,8 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         super.onCreate(savedInstanceState);
         SpeechKit.getInstance().configure(getBaseContext(), "6afff325-1614-4958-9f6c-700ef26e566a");
         setContentView(R.layout.activity_main);
+        btn_micro = (ImageButton)findViewById(R.id.btn_micro);
+        btn_edit = (ImageButton) findViewById(R.id.text_button);
         recognizer = null;
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -167,18 +172,26 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     public void executeTypeText(View view) {
         mAutocomplete.setVisibility(View.VISIBLE);
         mAutocomplete.requestFocus();
+        if (mRecognizerStarted) {
+            if (recognizer != null) {
+                recognizer.finishRecording();
+                btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));
+            }
+        }
     }
 
     public void executeMicro(View view) {
         if (mRecognizerStarted) {
             if(recognizer!=null){
-                recognizer.finishRecording();}
+                recognizer.finishRecording();
+                btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));}
         } else {
             if(recognizer==null){
             mRecognizerStarted = true;
             recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
             recognizer.setVADEnabled(false);
             recognizer.start();
+            btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_btn_micro_active));
             }
         }
 

@@ -12,26 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.os.Build;
-import android.widget.ImageButton;
 
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
+import com.communicationhelper.Helpers.PreferencesHelper;
 import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
 import ru.yandex.speechkit.*;
 
 import com.communicationhelper.Conversation.ConversationFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-
 public class MainActivity extends ActionBarActivity implements RecognizerListener {
     AutoCompleteTextView mAutocomplete;
     private static final String TAG = "SpeechKitSample";
     private static final String TAGRESULT = "RESULT";
     private Recognizer recognizer;
+    ConversationFragment mFragment;
     private boolean mRecognizerStarted = false;
 
     @Override
@@ -40,9 +36,10 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         SpeechKit.getInstance().configure(getBaseContext(), "6afff325-1614-4958-9f6c-700ef26e566a");
         setContentView(R.layout.activity_main);
         recognizer = null;
+        mFragment = new ConversationFragment();
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new ConversationFragment())
+                    .add(R.id.container, mFragment)
                     .commit();
         }
         mAutocomplete = (AutoCompleteTextView) findViewById(R.id.autocomplete);
@@ -182,6 +179,12 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
             }
         }
 
+    }
+
+    public void clearCurrentConversation(MenuItem item) {
+        PreferencesHelper.clearConversation(getApplicationContext());
+        mFragment.getAdapter().getDataSet().clear();
+        mFragment.getAdapter().notifyDataSetChanged();
     }
 
     /**

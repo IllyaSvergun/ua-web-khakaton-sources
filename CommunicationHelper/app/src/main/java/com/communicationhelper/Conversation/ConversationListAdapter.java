@@ -27,6 +27,10 @@ public class ConversationListAdapter extends BaseAdapter{
         data = new ArrayList<>();
     }
 
+    public List<Line> getDataSet() {
+        return data;
+    }
+
     public void addItem(Line line){
         data.add(line);
         notifyDataSetChanged();

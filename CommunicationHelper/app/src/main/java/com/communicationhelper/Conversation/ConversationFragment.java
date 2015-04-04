@@ -21,6 +21,7 @@ import org.json.JSONObject;
  * A simple {@link Fragment} subclass.
  */
 public class ConversationFragment extends Fragment {
+    ConversationListAdapter mAdapter;
 
 
     public ConversationFragment() {
@@ -34,8 +35,8 @@ public class ConversationFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_conversation, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.conversation);
-        ConversationListAdapter adapter = new ConversationListAdapter(getActivity());
-        listView.setAdapter(adapter);
+        mAdapter = new ConversationListAdapter(getActivity());
+        listView.setAdapter(mAdapter);
 
         try {
             JSONArray jsonArr = new JSONArray(PreferencesHelper.getConversation(getActivity()));
@@ -43,13 +44,17 @@ public class ConversationFragment extends Fragment {
             {
                 JSONObject jsonObj = jsonArr.getJSONObject(i);
                 Line line = new Line(jsonObj);
-                adapter.addItem(line);
+                mAdapter.addItem(line);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return rootView;
+    }
+
+    public ConversationListAdapter getAdapter() {
+        return mAdapter;
     }
 
 

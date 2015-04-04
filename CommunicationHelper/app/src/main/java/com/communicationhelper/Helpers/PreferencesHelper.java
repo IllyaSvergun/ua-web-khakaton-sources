@@ -21,6 +21,10 @@ public class PreferencesHelper {
         return PreferenceManager.getDefaultSharedPreferences(context).edit();
     }
 
+    public static void clearConversation(Context context) {
+        getPrefsEditor(context).remove(CURRENT_CONVERSATION_PREF).apply();
+    }
+
     public static void saveConversation(Context context, JSONArray jsonArray) {
         getPrefsEditor(context).putString(CURRENT_CONVERSATION_PREF, jsonArray.toString()).apply();
     }

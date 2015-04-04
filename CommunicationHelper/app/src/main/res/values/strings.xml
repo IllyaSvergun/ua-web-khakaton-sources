@@ -6,4 +6,5 @@
     <string name="title_activity_big_text">BigTextActivity</string>
     <string name="text_button_desc">create text message button</string>
     <string name="btn_micro_desc">start voice recognition button</string>
+    <string name="action_clear_conversation">Clear</string>
 </resources>

@@ -11,7 +11,16 @@
         tools:context=".MainActivity"
         tools:ignore="MergeRootFrame" />
 
+    <AutoCompleteTextView
+        android:id="@+id/autocomplete"
+        android:hint="@string/autocomplete_hint"
+        android:visibility="gone"
+        android:layout_above="@+id/buttons_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
+        android:id="@+id/buttons_block"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -24,6 +33,8 @@
             android:layout_height="wrap_content" />
 
         <ImageButton
+            android:id="@+id/text_button"
+            android:onClick="executeTypeText"
             android:src="@drawable/ic_text"
             android:layout_weight="1"
             android:layout_width="fill_parent"

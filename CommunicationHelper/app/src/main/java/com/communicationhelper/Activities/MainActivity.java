@@ -1,27 +1,30 @@
 package com.communicationhelper.Activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
 
+import com.communicationhelper.Conversation.ConversationFragment;
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
 import com.communicationhelper.Helpers.PreferencesHelper;
 import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
-import ru.yandex.speechkit.*;
 
-import com.communicationhelper.Conversation.ConversationFragment;
+import ru.yandex.speechkit.Recognition;
+import ru.yandex.speechkit.Recognizer;
+import ru.yandex.speechkit.RecognizerListener;
+import ru.yandex.speechkit.SpeechKit;
 
 public class MainActivity extends ActionBarActivity implements RecognizerListener {
     AutoCompleteTextView mAutocomplete;
@@ -211,8 +214,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }
 }

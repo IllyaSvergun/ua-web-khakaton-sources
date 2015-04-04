@@ -39,7 +39,7 @@ public class ConversationFragment extends Fragment {
 
         try {
             JSONArray jsonArr = new JSONArray(PreferencesHelper.getConversation(getActivity()));
-            for(int i = jsonArr.length() - 1; i > 0; i--)
+            for(int i = 0; i < jsonArr.length(); i++)
             {
                 JSONObject jsonObj = jsonArr.getJSONObject(i);
                 Line line = new Line(jsonObj);

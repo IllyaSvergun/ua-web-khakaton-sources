@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
+import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
 import com.communicationhelper.Helpers.PreferencesHelper;
 import com.communicationhelper.Interfaces.LineTypes;
@@ -30,18 +31,14 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     AutoCompleteTextView mAutocomplete;
     private static final String TAG = "SpeechKitSample";
     private static final String TAGRESULT = "RESULT";
-    private ImageButton btn_micro;
-    private ImageButton btn_edit;
     private Recognizer recognizer;
-    private String result_answer;
+    private boolean mRecognizerStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SpeechKit.getInstance().configure(getBaseContext(), "6afff325-1614-4958-9f6c-700ef26e566a");
         setContentView(R.layout.activity_main);
-        btn_micro = (ImageButton) findViewById(R.id.btn_micro);
-        btn_edit = (ImageButton) findViewById(R.id.text_button);
         recognizer = null;
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -60,14 +57,8 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             String text = mAutocomplete.getText().toString();
-                            Line response = new Line(text, LineTypes.RESPONSE);
-                            try {
-                                JSONArray jsonArr = new JSONArray(PreferencesHelper.getConversation(getApplicationContext()));
-                                jsonArr.put(response.toJSONObject());
-                                PreferencesHelper.saveConversation(getApplicationContext(), jsonArr);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            Line request = new Line(text, LineTypes.REQUEST);
+                            Conversation.addLineAndSave(getApplicationContext(), request);
                             executeBigTextScreen(text);
                             return true;
                         default:
@@ -159,15 +150,16 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     @Override
     public void onRecognitionDone(Recognizer recognizer, Recognition recognition) {
         Log.v(TAG, "onRecordingDone");
-        result_answer = recognition.getBestResultText();
-        Log.v("recognized_text", result_answer);
+        String result = recognition.getBestResultText();
+        Line response = new Line(result, LineTypes.RESPONSE);
+        Conversation.addLineAndSave(getApplicationContext(), response);
+        Log.v("recognized_text", result);
 
     }
 
     @Override
     public void onError(Recognizer recognizer, ru.yandex.speechkit.Error error) {
         Log.v(TAG, "onError");
-
     }
 
 
@@ -177,9 +169,15 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     }
 
     public void executeMicro(View view) {
-        recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
-        recognizer.setVADEnabled(false);
-        recognizer.start();
+        if (mRecognizerStarted) {
+            recognizer.finishRecording();
+        } else {
+            mRecognizerStarted = true;
+            recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
+            recognizer.setVADEnabled(false);
+            recognizer.start();
+        }
+
     }
 
     /**

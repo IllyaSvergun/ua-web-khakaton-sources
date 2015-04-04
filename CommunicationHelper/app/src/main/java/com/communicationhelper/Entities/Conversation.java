@@ -1,5 +1,12 @@
 package com.communicationhelper.Entities;
 
+import android.content.Context;
+
+import com.communicationhelper.Helpers.PreferencesHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 /**
  * Created by Illya Svergun on 04.04.15.
  *
@@ -19,5 +26,21 @@ public class Conversation {
 
     public String getTitle() {
         return title;
+    }
+
+    public static void addLineAndSave(Context context, Line line) {
+        try {
+            if (PreferencesHelper.getConversation(context).equals("")) {
+                JSONArray jsonArr = new JSONArray();
+                jsonArr.put(line.toJSONObject());
+                PreferencesHelper.saveConversation(context, jsonArr);
+            } else {
+                JSONArray jsonArr = new JSONArray(PreferencesHelper.getConversation(context));
+                jsonArr.put(line.toJSONObject());
+                PreferencesHelper.saveConversation(context, jsonArr);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

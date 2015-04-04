@@ -31,20 +31,26 @@
             android:id="@+id/btn_micro"
             android:background="@drawable/selector_btn_micro"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10px"
-            android:layout_marginBottom="10px"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/btn_micro_desc" />
 
         <ImageButton
             android:id="@+id/text_button"
             android:onClick="executeTypeText"
             android:background="@drawable/selector_btn_edit"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10px"
-            android:layout_marginBottom="10px"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_button_desc"/>
 
     </RelativeLayout>
 

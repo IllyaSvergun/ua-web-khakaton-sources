@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.communicationhelper.Entities.Line;
+import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
 
 /**
@@ -30,8 +32,8 @@ public class ConversationFragment extends Fragment {
         ConversationListAdapter adapter = new ConversationListAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        adapter.addItem(new Speech("request",Speech.TYPE_REQUEST));
-        adapter.addItem(new Speech("response",Speech.TYPE_RESPONSE));
+        adapter.addItem(new Line("request", LineTypes.REQUEST));
+        adapter.addItem(new Line("response", LineTypes.RESPONSE));
 
         return rootView;
     }

@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
+import com.communicationhelper.CommunicationHelperApplication;
 import com.communicationhelper.Conversation.ConversationFragment;
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
@@ -64,14 +65,10 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
                 return false;
             }
         });
-        mAutocomplete.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
+        mAutocomplete.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             String text = mAutocomplete.getText().toString();
@@ -168,7 +165,8 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         Log.v(TAG, "onRecordingDone");
         String result = recognition.getBestResultText();
         Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(getApplicationContext(), response);
+        Conversation.addLineAndSave(CommunicationHelperApplication.getContext(), response);
+        CommunicationHelperApplication.startMain();
         Log.v("recognized_text", result);
 
     }
@@ -197,12 +195,12 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
                 recognizer.finishRecording();
                 btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));}
         } else {
-            if(recognizer==null){
-            mRecognizerStarted = true;
-            recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
-            recognizer.setVADEnabled(false);
-            recognizer.start();
-            btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_btn_micro_active));
+            if(recognizer==null) {
+                mRecognizerStarted = true;
+                recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
+                recognizer.setVADEnabled(false);
+                recognizer.start();
+                btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_btn_micro_active));
             }
         }
 

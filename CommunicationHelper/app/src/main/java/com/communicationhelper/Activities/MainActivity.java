@@ -2,16 +2,12 @@ package com.communicationhelper.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
@@ -24,9 +20,7 @@ import com.communicationhelper.Helpers.PreferencesHelper;
 import com.communicationhelper.Interfaces.LineTypes;
 import com.communicationhelper.R;
 
-import ru.yandex.speechkit.Recognition;
 import ru.yandex.speechkit.Recognizer;
-import ru.yandex.speechkit.RecognizerListener;
 import ru.yandex.speechkit.SpeechKit;
 
 public class MainActivity extends ActionBarActivity {
@@ -152,20 +146,5 @@ public class MainActivity extends ActionBarActivity {
         PreferencesHelper.clearConversation(getApplicationContext());
         mFragment.getAdapter().getDataSet().clear();
         mFragment.getAdapter().notifyDataSetChanged();
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_main, container, false);
-        }
     }
 }

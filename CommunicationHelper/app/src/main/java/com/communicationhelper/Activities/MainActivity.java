@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
+import com.communicationhelper.CommunicationHelperApplication;
 import com.communicationhelper.Conversation.ConversationFragment;
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
@@ -157,7 +158,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         Log.v(TAG, "onRecordingDone");
         String result = recognition.getBestResultText();
         Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(this, response);
+        Conversation.addLineAndSave(CommunicationHelperApplication.getContext(), response);
         Log.v("recognized_text", result);
 
     }

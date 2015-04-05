@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical|right">
+    android:gravity="left|center_vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Medium Text"
         android:id="@+id/text"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/backgound_request"
-        android:padding="4dp" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="72dp"
+        android:background="@drawable/background_response" />
 </LinearLayout>

@@ -157,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         Log.v(TAG, "onRecordingDone");
         String result = recognition.getBestResultText();
         Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(getApplicationContext(), response);
+        Conversation.addLineAndSave(this, response);
         Log.v("recognized_text", result);
 
     }

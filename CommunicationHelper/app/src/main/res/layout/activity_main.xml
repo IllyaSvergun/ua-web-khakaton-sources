@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent" android:layout_width="match_parent"
-    android:background="@android:color/white">
+    android:background="#ffacd48e">
 
 
     <FrameLayout
@@ -21,13 +21,22 @@
         android:ems="10"
         android:layout_above="@+id/buttons_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/abc_primary_text_material_light" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/buttons_block"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:paddingBottom="16dp"
+        android:paddingTop="8dp"
+        android:background="#52858081">
 
         <ImageButton
             android:id="@+id/btn_micro"
@@ -35,12 +44,12 @@
             android:onClick="executeMicro"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/btn_micro_desc" />
+            android:contentDescription="@string/btn_micro_desc"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="10dp" />
 
         <ImageButton
             android:id="@+id/text_button"
@@ -48,14 +57,14 @@
             android:background="@drawable/selector_btn_edit"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/text_button_desc"/>
+            android:contentDescription="@string/text_button_desc"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="10dp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
 

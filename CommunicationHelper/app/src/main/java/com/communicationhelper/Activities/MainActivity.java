@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
 import com.communicationhelper.Conversation.ConversationFragment;
+import com.communicationhelper.ConversationListener;
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
 import com.communicationhelper.Helpers.PreferencesHelper;
@@ -28,7 +29,7 @@ import ru.yandex.speechkit.Recognizer;
 import ru.yandex.speechkit.RecognizerListener;
 import ru.yandex.speechkit.SpeechKit;
 
-public class MainActivity extends ActionBarActivity implements RecognizerListener {
+public class MainActivity extends ActionBarActivity {
     AutoCompleteTextView mAutocomplete;
     private static final String TAG = "SpeechKitSample";
     private static final String TAGRESULT = "RESULT";
@@ -116,69 +117,6 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onRecordingBegin(Recognizer recognizer) {
-        Log.v(TAG, "onRecordingBegin");
-
-    }
-
-    @Override
-    public void onSpeechDetected(Recognizer recognizer) {
-        Log.v(TAG, "onSpeechDetected");
-
-    }
-
-    @Override
-    public void onRecordingDone(Recognizer recognizer) {
-        Log.v(TAG, "onRecordDone");
-    }
-
-    @Override
-    public void onSoundDataRecorded(Recognizer recognizer, byte[] bytes) {
-        Log.v(TAG, "onSoundDataRecorded");
-    }
-
-    @Override
-    public void onPowerUpdated(Recognizer recognizer, float power) {
-//        Log.v(TAG, "onPoverUpdate");
-//        Log.v("onPoverUpdate", String.valueOf(power));
-//        if (power<0.1){
-//            recognizer.finishRecording();
-//            Log.v("onPoverUpdate", "<0.3");
-//        }
-//        else
-//        if(power>=0.1){
-//            Log.v("onPoverUpdate", ">0.3");
-////            recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
-////            recognizer.setVADEnabled(false);
-////            recognizer.start();
-//        }
-
-    }
-
-    @Override
-    public void onPartialResults(Recognizer recognizer, Recognition recognition, boolean b) {
-        Log.v(TAGRESULT, recognition.getBestResultText());
-        Log.v(TAG, "onPartialResult");
-
-    }
-
-    @Override
-    public void onRecognitionDone(Recognizer recognizer, Recognition recognition) {
-        Log.v(TAG, "onRecordingDone");
-        String result = recognition.getBestResultText();
-        Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(getApplicationContext(), response);
-        Log.v("recognized_text", result);
-
-    }
-
-    @Override
-    public void onError(Recognizer recognizer, ru.yandex.speechkit.Error error) {
-        Log.v(TAG, "onError");
-
-    }
-
 
     public void executeTypeText(View view) {
         mAutocomplete.setVisibility(View.VISIBLE);
@@ -186,24 +124,28 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         if (mRecognizerStarted) {
             if (recognizer != null) {
                 recognizer.finishRecording();
+                mRecognizerStarted = false;
                 btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));
             }
         }
     }
 
     public void executeMicro(View view) {
+        Log.e("recognizer",String.valueOf(mRecognizerStarted) );
         if (mRecognizerStarted) {
             if(recognizer!=null){
                 recognizer.finishRecording();
+//                recognizer = null;
+                mRecognizerStarted = false;
                 btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));}
         } else {
-            if(recognizer==null){
+//            if(recognizer==null){
             mRecognizerStarted = true;
-            recognizer = Recognizer.create("ru-RU", "general", new MainActivity());
+            recognizer = Recognizer.create("ru-RU", "general", new ConversationListener(getApplicationContext(),mFragment.getAdapter()));
             recognizer.setVADEnabled(false);
             recognizer.start();
             btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_btn_micro_active));
-            }
+//            }
         }
 
     }

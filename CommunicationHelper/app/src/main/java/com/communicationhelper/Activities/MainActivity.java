@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         }
         mAutocomplete = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         mAutocomplete.setAdapter(new ArrayAdapter<>(getApplicationContext(),
-                R.layout.autocomplete_item,
+                android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.autocomplete_strings)));
 
         mAutocomplete.setOnTouchListener(new View.OnTouchListener() {

@@ -121,6 +121,7 @@ public class MainActivity extends ActionBarActivity {
             if (recognizer != null) {
                 recognizer.finishRecording();
                 mRecognizerStarted = false;
+                mFragment.getAdapter().setOnRecording(false);
                 btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));
             }
         }
@@ -132,11 +133,13 @@ public class MainActivity extends ActionBarActivity {
                 recognizer.finishRecording();
 //                recognizer = null;
                 mRecognizerStarted = false;
+                mFragment.getAdapter().setOnRecording(false);
                 btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_btn_micro));}
         } else {
 //            if(recognizer==null){
             mRecognizerStarted = true;
-            recognizer = Recognizer.create("ru-RU", "general", new ConversationListener(getApplicationContext(),mFragment.getAdapter()));
+            mFragment.getAdapter().setOnRecording(true);
+            recognizer = Recognizer.create("ru-RU", "general", new ConversationListener(getApplicationContext(),mFragment.getAdapter(),mFragment.getListView()));
             recognizer.setVADEnabled(false);
             recognizer.start();
             btn_micro.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_btn_micro_active));

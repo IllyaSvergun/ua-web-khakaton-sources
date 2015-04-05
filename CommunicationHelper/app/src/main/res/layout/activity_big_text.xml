@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/text"
-        android:textSize="56sp"
+        android:textSize="32sp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:text="@string/hello_world"

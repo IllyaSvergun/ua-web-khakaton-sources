@@ -22,6 +22,7 @@ import org.json.JSONObject;
  */
 public class ConversationFragment extends Fragment {
     ConversationListAdapter mAdapter;
+    ListView listView;
 
 
     public ConversationFragment() {
@@ -34,7 +35,7 @@ public class ConversationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_conversation, container, false);
-        ListView listView = (ListView) rootView.findViewById(R.id.conversation);
+        listView = (ListView) rootView.findViewById(R.id.conversation);
         mAdapter = new ConversationListAdapter(getActivity());
         listView.setAdapter(mAdapter);
 
@@ -57,5 +58,8 @@ public class ConversationFragment extends Fragment {
         return mAdapter;
     }
 
+    public ListView getListView(){
+        return listView;
+    }
 
 }

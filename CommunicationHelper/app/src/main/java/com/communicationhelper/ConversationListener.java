@@ -2,6 +2,7 @@ package com.communicationhelper;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.communicationhelper.Conversation.ConversationListAdapter;
 import com.communicationhelper.Entities.Conversation;
@@ -19,10 +20,12 @@ public class ConversationListener  implements RecognizerListener {
     private final String TAG = "ConversationListener";
     private Context mContext;
     private ConversationListAdapter mAdapter;
+    private ListView listView;
 
-    public ConversationListener(Context context, ConversationListAdapter adapter){
+    public ConversationListener(Context context, ConversationListAdapter adapter, ListView listView){
         mContext = context;
         mAdapter = adapter;
+        this.listView = listView;
     }
 
     @Override
@@ -76,10 +79,12 @@ public class ConversationListener  implements RecognizerListener {
     public void onRecognitionDone(Recognizer recognizer, Recognition recognition) {
         Log.v(TAG, "onRecordingDone");
         String result = recognition.getBestResultText();
-        Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(mContext,response);
-        mAdapter.addItem(response);
-
+        if(!result.equals("")) {
+            Line response = new Line(result, LineTypes.RESPONSE);
+            Conversation.addLineAndSave(mContext, response);
+            mAdapter.addItem(response);
+            listView.setAdapter(mAdapter);
+        }
     }
 
     @Override

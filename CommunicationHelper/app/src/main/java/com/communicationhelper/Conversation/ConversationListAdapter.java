@@ -23,6 +23,7 @@ import java.util.List;
 public class ConversationListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Line> data;
+    private boolean isOnRecording = false;
     Context mContext;
 
     public ConversationListAdapter(Context context) {
@@ -87,12 +88,18 @@ public class ConversationListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bigTextIntent = new Intent(mContext, BigTextActivity.class);
-                bigTextIntent.putExtra(BigTextActivity.EXTRA_BIG_TEXT, getItem(position).getText());
-                mContext.startActivity(bigTextIntent);
+                if(!isOnRecording) {
+                    Intent bigTextIntent = new Intent(mContext, BigTextActivity.class);
+                    bigTextIntent.putExtra(BigTextActivity.EXTRA_BIG_TEXT, getItem(position).getText());
+                    mContext.startActivity(bigTextIntent);
+                }
             }
         });
         return convertView;
+    }
+
+    public void setOnRecording(boolean isRecording){
+        isOnRecording = isRecording;
     }
 
     public static class ViewHolder{

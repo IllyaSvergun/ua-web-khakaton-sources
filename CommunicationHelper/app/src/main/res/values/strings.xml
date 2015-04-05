@@ -7,4 +7,8 @@
     <string name="text_button_desc">create text message button</string>
     <string name="btn_micro_desc">start voice recognition button</string>
     <string name="action_clear_conversation">Clear</string>
+    
+    <string-array name="autocomplete_strings">
+        <item>Добрый день! Я - глухонемой. Говорите в телефон, пожалуйста!</item>
+    </string-array>
 </resources>

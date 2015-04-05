@@ -9,12 +9,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
-import com.communicationhelper.CommunicationHelperApplication;
 import com.communicationhelper.Conversation.ConversationFragment;
 import com.communicationhelper.Entities.Conversation;
 import com.communicationhelper.Entities.Line;
@@ -52,6 +53,17 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
                     .commit();
         }
         mAutocomplete = (AutoCompleteTextView) findViewById(R.id.autocomplete);
+        mAutocomplete.setAdapter(new ArrayAdapter<>(getApplicationContext(),
+                R.layout.autocomplete_item,
+                getResources().getStringArray(R.array.autocomplete_strings)));
+
+        mAutocomplete.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mAutocomplete.showDropDown();
+                return false;
+            }
+        });
         mAutocomplete.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -119,8 +131,6 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
     @Override
     public void onRecordingDone(Recognizer recognizer) {
         Log.v(TAG, "onRecordDone");
-
-
     }
 
     @Override
@@ -158,7 +168,7 @@ public class MainActivity extends ActionBarActivity implements RecognizerListene
         Log.v(TAG, "onRecordingDone");
         String result = recognition.getBestResultText();
         Line response = new Line(result, LineTypes.RESPONSE);
-        Conversation.addLineAndSave(CommunicationHelperApplication.getContext(), response);
+        Conversation.addLineAndSave(getApplicationContext(), response);
         Log.v("recognized_text", result);
 
     }

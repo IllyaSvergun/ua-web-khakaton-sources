@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         }
         mAutocomplete = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         mAutocomplete.setAdapter(new ArrayAdapter<>(getApplicationContext(),
-                R.layout.autocomplete_item,
+                android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.autocomplete_strings)));
 
         mAutocomplete.setOnTouchListener(new View.OnTouchListener() {
@@ -65,14 +65,10 @@ public class MainActivity extends ActionBarActivity {
                 return false;
             }
         });
-        mAutocomplete.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
+        mAutocomplete.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             String text = mAutocomplete.getText().toString();
@@ -131,7 +127,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void executeMicro(View view) {
-        Log.e("recognizer",String.valueOf(mRecognizerStarted) );
         if (mRecognizerStarted) {
             if(recognizer!=null){
                 recognizer.finishRecording();

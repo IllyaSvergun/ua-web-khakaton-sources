@@ -1,8 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat">
+        <item name="actionBarStyle">@style/actionBar</item>
+        <item name="colorPrimaryDark">@color/accent</item>
+    </style>
+
+    <style name="actionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/accent_material_light</item>
     </style>
 
 </resources>

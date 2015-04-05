@@ -18,6 +18,8 @@ public class BigTextActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_text);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("");
 
         mText = (TextView) findViewById(R.id.text);
         mText.setText(getIntent().getStringExtra(EXTRA_BIG_TEXT));
